@@ -1,0 +1,15 @@
+spring:
+
+  application:
+    name: studyHub
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/studyhub
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+
