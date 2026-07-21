@@ -1,17 +1,12 @@
 package br.com.studyHub.database.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Min;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.UUID;
 
 //pegar valores
@@ -24,22 +19,22 @@ import java.util.UUID;
 @AllArgsConstructor
 //para ficar assim user.builder().name("teste").build()
 @Builder
-@Entity(name = "students")
+@Table(name = "students")
+@Entity()
 public class StudentsEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @NotBlank(message = "usuário deve digitar nome/senha")
+    @Column(nullable = false)
     private String name;
 
-    @NotBlank
-    @Email(message = "email deve ser válido")
+    @Column(nullable = false, unique = true)
     private String email;
 
     @NotBlank(message = "usuário deve digitar nome/senha")
-    @Min(value = 5, message = "senha deve ter mais que 5 caracteres")
+    @Length(min = 10, max = 100, message = "a senha deve ter 10 á 100 caracteres")
     private String password;
 
     @CreationTimestamp
