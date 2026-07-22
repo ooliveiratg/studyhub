@@ -2,7 +2,7 @@ package br.com.studyHub.handler;
 
 import br.com.studyHub.dto.BadRequestExceptionDto;
 import br.com.studyHub.dto.ExceptionDto;
-import br.com.studyHub.exception.BadRequestExeception;
+import br.com.studyHub.exception.BadRequestException;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
@@ -36,9 +36,10 @@ public class ExceptionHandlerController {
 
     }
 
-    @ExceptionHandler(BadRequestExeception.class)
-    public ResponseEntity<BadRequestExceptionDto> exceptionFormatBadRequestErrors(BadRequestExeception e) {
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<BadRequestExceptionDto> exceptionFormatBadRequestErrors(BadRequestException e) {
         String message = e.getMessage();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new BadRequestExceptionDto(message));
     }
+
 }

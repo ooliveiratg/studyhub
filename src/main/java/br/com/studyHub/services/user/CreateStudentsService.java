@@ -4,7 +4,7 @@ import br.com.studyHub.database.model.StudentsEntity;
 import br.com.studyHub.database.repository.StudentsRepository;
 import br.com.studyHub.dto.ApiResponse;
 import br.com.studyHub.dto.StudentsDto;
-import br.com.studyHub.exception.BadRequestExeception;
+import br.com.studyHub.exception.BadRequestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ public class CreateStudentsService {
         StudentsEntity students = studentsRepository.findByEmail(dto.email()).orElse(null);
 
         if (students != null) {
-            throw new BadRequestExeception("Usuário já existe");
+            throw new BadRequestException("Usuário já existe");
         }
         studentsRepository.save(
                 StudentsEntity.builder()
