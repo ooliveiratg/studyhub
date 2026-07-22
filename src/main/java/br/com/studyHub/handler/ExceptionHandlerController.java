@@ -1,8 +1,9 @@
 package br.com.studyHub.handler;
 
-import br.com.studyHub.dto.BadRequestExceptionDto;
 import br.com.studyHub.dto.ExceptionDto;
+import br.com.studyHub.dto.SimpleMessageExceptionDto;
 import br.com.studyHub.exception.BadRequestException;
+import br.com.studyHub.exception.NotFoundException;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
@@ -37,9 +38,16 @@ public class ExceptionHandlerController {
     }
 
     @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity<BadRequestExceptionDto> exceptionFormatBadRequestErrors(BadRequestException e) {
+    public ResponseEntity<SimpleMessageExceptionDto> exceptionFormatBadRequestErrors(BadRequestException e) {
         String message = e.getMessage();
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new BadRequestExceptionDto(message));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new SimpleMessageExceptionDto(message));
     }
+
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<SimpleMessageExceptionDto> exceptionFormatNotFoundErrors(NotFoundException e) {
+        String message = e.getMessage();
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new SimpleMessageExceptionDto(message));
+    }
+
 
 }

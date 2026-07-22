@@ -1,6 +1,6 @@
 package br.com.studyHub.dto;
 
-public record BadRequestExceptionDto(
+public record SimpleMessageExceptionDto(
         String message
 ) {
 }

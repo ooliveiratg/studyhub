@@ -2,12 +2,12 @@ package br.com.studyHub.controllers;
 
 import br.com.studyHub.database.model.StudentsEntity;
 import br.com.studyHub.services.user.ListAllStudentsService;
+import br.com.studyHub.services.user.ListOneStudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/user/list")
@@ -15,6 +15,7 @@ import java.util.UUID;
 public class ListStudentsController {
 
     private final ListAllStudentsService listAllStudentsService;
+    private final ListOneStudentService listOneStudentService;
 
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
@@ -24,8 +25,8 @@ public class ListStudentsController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public StudentsEntity listOneStudent(@PathVariable UUID id){
-        return
+    public StudentsEntity listOneStudent(@PathVariable String id) {
+        return listOneStudentService.execute(id);
     }
 
 }
