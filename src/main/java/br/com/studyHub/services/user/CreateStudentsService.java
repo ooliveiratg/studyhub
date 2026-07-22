@@ -26,6 +26,6 @@ public class CreateStudentsService {
                         .password(dto.password())
                         .build());
 
-        return new ApiResponse<>("aluno criado com sucesso", students);
+        return new ApiResponse<>("aluno criado com sucesso", dto);
     }
 }
