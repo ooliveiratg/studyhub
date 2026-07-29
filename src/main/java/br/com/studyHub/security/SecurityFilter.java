@@ -33,6 +33,7 @@ public class SecurityFilter extends OncePerRequestFilter {
 
             if (subject.isEmpty()) {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                return;
             }
             request.setAttribute("userId", subject);
 
