@@ -2,8 +2,8 @@ package br.com.studyHub.services.user;
 
 import br.com.studyHub.database.model.StudentsEntity;
 import br.com.studyHub.database.repository.StudentsRepository;
-import br.com.studyHub.dto.ApiResponse;
-import br.com.studyHub.dto.StudentsDto;
+import br.com.studyHub.dto.ApiResponseDTO;
+import br.com.studyHub.dto.StudentsDTO;
 import br.com.studyHub.exception.BadRequestException;
 import br.com.studyHub.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ import java.util.UUID;
 public class UpdateStudentService {
     private final StudentsRepository studentsRepository;
 
-    public ApiResponse execute(String id, StudentsDto dto) {
+    public ApiResponseDTO execute(String id, StudentsDTO dto) {
         StudentsEntity existStudent = studentsRepository
                 .findById(UUID.fromString(id))
                 .orElseThrow(() -> new NotFoundException("Usuário não encontrado"));
@@ -31,6 +31,6 @@ public class UpdateStudentService {
 
         studentsRepository.save(existStudent);
 
-        return new ApiResponse("Dados atualizados com sucesso", existStudent);
+        return new ApiResponseDTO("Dados atualizados com sucesso", existStudent);
     }
 }

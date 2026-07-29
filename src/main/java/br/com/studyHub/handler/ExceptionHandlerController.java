@@ -1,7 +1,7 @@
 package br.com.studyHub.handler;
 
-import br.com.studyHub.dto.ExceptionDto;
-import br.com.studyHub.dto.SimpleMessageResponseDto;
+import br.com.studyHub.dto.ExceptionDTO;
+import br.com.studyHub.dto.SimpleMessageResponseDTO;
 import br.com.studyHub.exception.BadRequestException;
 import br.com.studyHub.exception.NotFoundException;
 import org.springframework.context.MessageSource;
@@ -25,12 +25,12 @@ public class ExceptionHandlerController {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<List<ExceptionDto>> exceptionFormatArgsInvalidErrors(MethodArgumentNotValidException e) {
-        List<ExceptionDto> dto = new ArrayList<>();
+    public ResponseEntity<List<ExceptionDTO>> exceptionFormatArgsInvalidErrors(MethodArgumentNotValidException e) {
+        List<ExceptionDTO> dto = new ArrayList<>();
 
         e.getBindingResult().getFieldErrors().forEach(err -> {
             String message = messageSource.getMessage(err, LocaleContextHolder.getLocale());
-            ExceptionDto errorDto = new ExceptionDto(message, err.getField());
+            ExceptionDTO errorDto = new ExceptionDTO(message, err.getField());
             dto.add(errorDto);
         });
         return new ResponseEntity<>(dto, HttpStatus.BAD_REQUEST);
@@ -38,15 +38,15 @@ public class ExceptionHandlerController {
     }
 
     @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity<SimpleMessageResponseDto> exceptionFormatBadRequestErrors(BadRequestException e) {
+    public ResponseEntity<SimpleMessageResponseDTO> exceptionFormatBadRequestErrors(BadRequestException e) {
         String message = e.getMessage();
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new SimpleMessageResponseDto(message));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new SimpleMessageResponseDTO(message));
     }
 
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<SimpleMessageResponseDto> exceptionFormatNotFoundErrors(NotFoundException e) {
+    public ResponseEntity<SimpleMessageResponseDTO> exceptionFormatNotFoundErrors(NotFoundException e) {
         String message = e.getMessage();
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new SimpleMessageResponseDto(message));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new SimpleMessageResponseDTO(message));
     }
 
 

@@ -1,7 +1,7 @@
 package br.com.studyHub.dto;
 
-public record ApiResponse<T>(
+public record ExceptionDTO(
         String message,
-        T data
+        String fields
 ) {
 }
