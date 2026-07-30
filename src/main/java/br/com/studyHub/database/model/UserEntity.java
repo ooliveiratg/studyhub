@@ -19,9 +19,9 @@ import java.util.UUID;
 @AllArgsConstructor
 //para ficar assim user.builder().name("teste").build()
 @Builder
-@Table(name = "students")
+@Table(name = "users")
 @Entity()
-public class StudentsEntity {
+public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -39,6 +39,13 @@ public class StudentsEntity {
 
     @CreationTimestamp
     private LocalDateTime createdAt;
+
+
+    @ManyToOne
+    @JoinTable(name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private RoleEntity role;
 
 
 }

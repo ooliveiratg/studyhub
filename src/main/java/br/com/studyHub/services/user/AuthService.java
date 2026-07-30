@@ -1,7 +1,7 @@
 package br.com.studyHub.services.user;
 
-import br.com.studyHub.database.model.StudentsEntity;
-import br.com.studyHub.database.repository.StudentsRepository;
+import br.com.studyHub.database.model.UserEntity;
+import br.com.studyHub.database.repository.UserRepository;
 import br.com.studyHub.dto.AuthResponseDTO;
 import br.com.studyHub.dto.AuthSudentsDTO;
 import br.com.studyHub.exception.BadRequestException;
@@ -14,18 +14,19 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Arrays;
 
 @Service
 @RequiredArgsConstructor
-public class AuthStudentService {
+public class AuthService {
     @Value("${security.token.key}")
     private String secretkey;
 
-    private final StudentsRepository studentsRepository;
+    private final UserRepository userRepository;
     private final PasswordEncoder encoder;
 
     public AuthResponseDTO execute(AuthSudentsDTO dto) {
-        StudentsEntity user = studentsRepository.findByEmail(dto.email()).orElseThrow(() -> new BadRequestException("Email ou senha incorretos"));
+        UserEntity user = userRepository.findByEmail(dto.email()).orElseThrow(() -> new BadRequestException("Email ou senha incorretos"));
 
         Algorithm algorithm = Algorithm.HMAC256(secretkey);
 
@@ -35,13 +36,12 @@ public class AuthStudentService {
             throw new BadRequestException("Email ou senha incorretos");
         }
 
-        System.out.println(user.getId().toString());
-
         String authUser = JWT
                 .create()
                 .withIssuer("studyhub")
                 .withExpiresAt(Instant.now().plus(Duration.ofMinutes(15)))
                 .withSubject(user.getId().toString())
+                .withClaim("roles", Arrays.asList(user.getRole().getName()))
                 .sign(algorithm);
 
         AuthResponseDTO responseDTO = AuthResponseDTO.builder()

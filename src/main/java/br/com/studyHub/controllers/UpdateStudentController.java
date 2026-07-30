@@ -5,6 +5,7 @@ import br.com.studyHub.dto.StudentsDTO;
 import br.com.studyHub.services.user.UpdateStudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,6 +15,7 @@ public class UpdateStudentController {
 
     private final UpdateStudentService updateStudentService;
 
+    @PreAuthorize("hasRole('USER')")
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ApiResponseDTO updateStudent(@PathVariable String id, @RequestBody StudentsDTO dto) {

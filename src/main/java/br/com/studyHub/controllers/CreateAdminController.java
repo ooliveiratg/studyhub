@@ -2,7 +2,7 @@ package br.com.studyHub.controllers;
 
 import br.com.studyHub.dto.ApiResponseDTO;
 import br.com.studyHub.dto.StudentsDTO;
-import br.com.studyHub.services.user.CreateStudentsService;
+import br.com.studyHub.services.user.CreateAdminService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -10,16 +10,16 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/auth/students")
+@RequestMapping("/auth/admin")
 @RequiredArgsConstructor
 @Validated
-public class CreateStudentsController {
+public class CreateAdminController {
 
-    private final CreateStudentsService createStudentsService;
+    private final CreateAdminService createAdminServiceService;
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public ApiResponseDTO execute(@Valid @RequestBody StudentsDTO dto) {
-        return createStudentsService.execute(dto);
+        return createAdminServiceService.execute(dto);
     }
 }

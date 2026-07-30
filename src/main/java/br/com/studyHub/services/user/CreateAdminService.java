@@ -15,11 +15,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class CreateStudentsService {
+public class CreateAdminService {
     private final UserRepository userRepository;
     private final PasswordEncoder encoder;
-    private final RoleRepository rolesRepository;
 
+    private final RoleRepository rolesRepository;
 
     public ApiResponseDTO execute(StudentsDTO dto) {
         UserEntity students = userRepository.findByEmail(dto.email()).orElse(null);
@@ -30,13 +30,12 @@ public class CreateStudentsService {
 
         String passwordEncoder = encoder.encode(dto.password());
 
-
         RoleEntity roles = rolesRepository
-                .findByName(RolesEnum.ROLE_USER.name())
+                .findByName(RolesEnum.ROLE_ADMIN.name())
                 .orElseGet(() -> rolesRepository.save(RoleEntity.builder()
-                        .name(RolesEnum.ROLE_USER.name())
-                        .build())
-                );
+                        .name(RolesEnum.ROLE_ADMIN.name())
+                        .build()));
+
 
         UserEntity user = userRepository.save(
                 UserEntity.builder()
