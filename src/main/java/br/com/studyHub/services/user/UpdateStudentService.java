@@ -7,6 +7,7 @@ import br.com.studyHub.dto.StudentsDTO;
 import br.com.studyHub.exception.BadRequestException;
 import br.com.studyHub.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -15,6 +16,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class UpdateStudentService {
     private final UserRepository userRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     public ApiResponseDTO execute(String id, StudentsDTO dto) {
         UserEntity existStudent = userRepository
@@ -27,7 +29,7 @@ public class UpdateStudentService {
 
         existStudent.setName(dto.name());
         existStudent.setEmail(dto.email());
-        existStudent.setPassword(dto.password());
+        existStudent.setPassword(passwordEncoder.encode(dto.password()));
 
         userRepository.save(existStudent);
 

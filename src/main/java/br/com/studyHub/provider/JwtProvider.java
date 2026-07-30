@@ -19,7 +19,7 @@ public class JwtProvider {
         header = header.replace("Bearer ", "");
         try {
             Algorithm secret = Algorithm.HMAC256(secretKey);
-            var token = JWT.require(secret).build().verify(header);
+            var token = JWT.require(secret).withIssuer("studyhub").build().verify(header);
             return token;
 
         } catch (JWTVerificationException e) {
